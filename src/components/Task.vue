@@ -55,5 +55,29 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.task-item
+  margin-bottom 20px
+  &:last-child
+    margin-bottom 0
 
+.ui-label
+  margin-right 8px
+
+.task-item__info
+  display flex
+  align-items center
+  justify-content space-between
+  margin-bottom 20px
+  .button-close
+    width 20px
+    height @width
+
+.task-item__header
+  display flex
+  align-items center
+  margin-bottom 10px
+  .ui-checkbox-wrapper
+    margin-right 8px
+  .ui-title-3
+    margin-bottom 0
 </style>

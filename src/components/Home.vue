@@ -34,15 +34,49 @@
           label(
             for="radioSerial"
           ) Serial
+
+        // TOTAL TIME
         .total-time
+
+          // Film Time
           .total-time__film(
             v-if="whatWatch === 'Film'"
           )
-            span Total Film Times
+            span.time-title Hours
+            input.time-input(
+              type="Number"
+              v-model="filmHours"
+            )
+            span.time-title Minutes
+            input.time-input(
+              type="Number"
+              v-model="filmMinutes"
+            )
+
+            p {{ filmTime }}
+
+          // Serial Time
           .total-time__serial(
             v-if="whatWatch === 'Serial'"
           )
-            span Total Serial Times
+            span.time-title How many seasons?
+            input.time-input(
+              type="Number"
+              v-model="serialSeasons"
+            )
+            span.time-title How many series?
+            input.time-input(
+              type="Number"
+              v-model="serialSeries"
+            )
+            span.time-title How long is one series? (in minutes)
+            input.time-input(
+              type="Number"
+              v-model="serialSeriesMinutes"
+            )
+
+            p {{ serialTime }}
+
         .tag-list
           .ui-tag__wrapper
             .ui-tag
@@ -57,7 +91,16 @@ export default {
       taskTitle: '',
       taskDescription: '',
       taskId: 3,
-      whatWatch: 'Film'
+      whatWatch: 'Film',
+
+      // Total Time
+      // Film
+      filmHours: 1,
+      filmMinutes: 30,
+      // Serial
+      serialSeasons: 1,
+      serialSeries: 11,
+      serialSeriesMinutes: 40
     }
   },
   methods: {
@@ -65,19 +108,42 @@ export default {
       if (this.taskTitle === '') {
         return
       }
-      this.tasks.push({
+      let time
+      if (this.whatWatch === 'Film') {
+        time = this.filmTime
+      } else {
+        time = this.serialTime
+      }
+      const task = {
         id: this.taskId,
         title: this.taskTitle,
         description: this.taskDescription,
         whatWatch: this.whatWatch,
+        time,
         completed: false,
         editing: false
-      })
+      }
+      console.log(task)
 
       // Reset
       this.taskId += 1
       this.taskTitle = ''
       this.taskDescription = ''
+    },
+    getHoursAndMinutes (minutes) {
+      let hours = Math.trunc(minutes / 60)
+      let min = minutes % 60
+      return hours + ' Hours ' + min + ' Minutes'
+    }
+  },
+  computed: {
+    filmTime () {
+      let min = (this.filmHours * 60) + (this.filmMinutes * 1)
+      return this.getHoursAndMinutes(min)
+    },
+    serialTime () {
+      let min = this.serialSeasons * this.serialSeries * this.serialSeriesMinutes
+      return this.getHoursAndMinutes(min)
     }
   }
 }
@@ -86,35 +152,27 @@ export default {
 <style lang="stylus" scoped>
 .option-list
   display flex
+  align-items center
+  margin-bottom 20px
   .what-watch--radio
     margin-right 12px
+  input
+    margin-bottom 0
   label
     margin-right 20px
+    margin-bottom 0
     &:last-child
-      margin-bottom 0
-.task-item
+      margin-right 0
+
+// Total Time
+.total-time
   margin-bottom 20px
-  &:last-child
-    margin-bottom 0
 
-.ui-label
-  margin-right 8px
+.time-title
+  display block
+  margin-bottom 6px
 
-.task-item__info
-  display flex
-  align-items center
-  justify-content space-between
-  margin-bottom 20px
-  .button-close
-    width 20px
-    height @width
-
-.task-item__header
-  display flex
-  align-items center
-  margin-bottom 10px
-  .ui-checkbox-wrapper
-    margin-right 8px
-  .ui-title-3
-    margin-bottom 0
+.time-input
+  max-width 80px
+  margin-right 10px
 </style>
