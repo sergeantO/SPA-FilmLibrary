@@ -48,30 +48,6 @@
             .ui-tag
               span.tag-title Dogs
               span.button-close
-      section
-        .container
-          .task-list
-            .task-item(
-              v-for="task in tasks"
-              :key="task.id"
-              :class="{ completed: task.completed }"
-            )
-              .ui-card.ui-card--shadow
-                .task-item__info
-                  .task-item__main-info
-                    span.ui-label.ui-label--light {{ task.whatWatch }}
-                    span Total Time:
-                  span.button-close
-                .task-item__content
-                  .task-item__header
-                    .ui-checkbox-wrapper
-                      input.ui-checkbox(
-                        type='checkbox'
-                        v-model="task.completed"
-                      )
-                    span.ui-title-3 {{ task.title }}
-                  .task-item__body
-                    p.ui-text-regular {{ task.description }}
 </template>
 
 <script>
@@ -81,25 +57,7 @@ export default {
       taskTitle: '',
       taskDescription: '',
       taskId: 3,
-      whatWatch: 'Film',
-      tasks: [
-        {
-          'id': 1,
-          'title': 'GrowthBusters: Hooked on Growth',
-          'description': 'Idirected this documentary challengi...',
-          'whatWatch': 'Film',
-          'completed': false,
-          'editing': false
-        },
-        {
-          'id': 2,
-          'title': 'Game of thrones',
-          'description': 'Best serials',
-          'whatWatch': 'Serial',
-          'completed': false,
-          'editing': false
-        }
-      ]
+      whatWatch: 'Film'
     }
   },
   methods: {
