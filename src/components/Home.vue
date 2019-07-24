@@ -7,13 +7,11 @@
           type="text"
           placeholder="What we will watch?"
           v-model="taskTitle"
-          @keyup.enter="newTask"
         )
         textarea(
           type="text"
           placeholder="Description"
           v-model="taskDescription"
-          @keyup.enter="newTask"
         )
         .option-list
           input.what-watch--radio(
@@ -99,9 +97,6 @@
             v-model="tagTitle"
             @keyup.enter="newTag"
           )
-          .button.button-default(
-            @click="newTag"
-          ) Send
 
         //All Tags
         .tag-list
@@ -115,6 +110,10 @@
             )
               span.tag-title {{ tag.title }}
               span.button-close
+        .row.grid-end
+          .button.button-primary.button--round(
+              @click="newTask"
+          ) Add {{ whatWatch }}
 </template>
 
 <script>
