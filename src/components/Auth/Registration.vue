@@ -38,13 +38,13 @@
                   @change="$v.repeatPassword.$touch()"
                 )
                 .error(v-if="!$v.repeatPassword.sameAsPassword") Passwords must be identical.
-              
+
               .buttons-list
                 button.button.button--round.button-primary(
                   type="submit"
                   :disabled="submitStatus === 'PENDING'"
                 ) Registration
-              
+
               .buttons-list.buttons-list--info
                 p(v-if="submitStatus === 'OK'") Thanks for your submission!
                 p(v-if="submitStatus === 'ERROR'") Please fill the form correctly.
@@ -133,5 +133,5 @@ input
 
 a
   color #444ce0
-  
+
 </style>
