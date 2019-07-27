@@ -42,13 +42,15 @@
               .buttons-list
                 button.button.button--round.button-primary(
                   type="submit"
-                  :disabled="submitStatus === 'PENDING'"
-                ) Registration
+                )
+                  span(v-if="loading") Loading...
+                  span(v-else) Registration
 
               .buttons-list.buttons-list--info
                 p(v-if="submitStatus === 'OK'") Thanks for your submission!
                 p(v-if="submitStatus === 'ERROR'") Please fill the form correctly.
-                p(v-if="submitStatus === 'PENDING'") Sending...
+                p(v-else) {{ submitStatus }}
+                //- p(v-if="submitStatus === 'PENDING'") Sending...
 
               .buttons-list.buttons-list--info
                 span Do you have account?
@@ -85,18 +87,30 @@ export default {
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR'
       } else {
-        console.log('submit!')
         const user = {
           email: this.email,
           password: this.password
         }
-        console.log(user)
+        this.$store.dispatch('registerUser', user)
+          .then(() => {
+            console.log('User is Register!')
+            this.submitStatus = 'OK'
+            this.$router.push('/')
+          })
+          .catch(err => {
+            this.submitStatus = err.message
+          })
         // do your submit logic here
-        this.submitStatus = 'PENDING'
-        setTimeout(() => {
-          this.submitStatus = 'OK'
-        }, 500)
+        // this.submitStatus = 'PENDING'
+        // setTimeout(() => {
+        //   this.submitStatus = 'OK'
+        // }, 500)
       }
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
     }
   }
 }
@@ -105,9 +119,15 @@ export default {
 <style lang="stylus" scoped>
 .auth
   display flex
+  flex-wrap wrap
 .auth__banner,
 .auth__form
   width 50%
+  @media screen and (max-width 768px)
+    width 100%
+    margin-bottom 30px
+    &:last-child
+      margin-bottom 0
 
 .form-item
   .error

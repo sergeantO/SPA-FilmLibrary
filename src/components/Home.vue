@@ -13,7 +13,7 @@
               :class="{ error: $v.taskTitle.$error }"
             )
             .error(v-if="!$v.taskTitle.required") Title is required.
-          
+
           // Task desr
           .form-item
             textarea(
@@ -22,7 +22,7 @@
               v-model="taskDescription"
             )
 
-          // WHAT WE WATCH 
+          // WHAT WE WATCH
           .option-list
             input.what-watch--radio(
               type="radio"
@@ -171,7 +171,7 @@ export default {
         use: false
       }
       this.$store.dispatch('newTag', tag)
-       // Reset
+      // Reset
       this.tagTitle = ''
     },
 
