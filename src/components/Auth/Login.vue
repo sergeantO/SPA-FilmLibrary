@@ -133,12 +133,15 @@
                 button.button.button--round.button-primary(
                   type="submit"
                   :disabled="submitStatus === 'PENDING'"
-                ) Login
+                )
+                  span(v-if="loading") Loading...
+                  span(v-else) Login
 
               .buttons-list.buttons-list--info
                 p(v-if="submitStatus === 'OK'") Thanks for your submission!
                 p(v-if="submitStatus === 'ERROR'") Please fill the form correctly.
-                p(v-if="submitStatus === 'PENDING'") Sending...
+                p(v-else) {{ submitStatus }}
+                //- p(v-if="submitStatus === 'PENDING'") Sending...
 
               .buttons-list.buttons-list--info
                 span Need registration?
@@ -172,18 +175,25 @@ export default {
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR'
       } else {
-        console.log('login!')
         const user = {
           email: this.email,
           password: this.password
         }
-        console.log(user)
-        // do your submit logic here
-        this.submitStatus = 'PENDING'
-        setTimeout(() => {
-          this.submitStatus = 'OK'
-        }, 500)
+        this.$store.dispatch('loginUser', user)
+          .then(() => {
+            console.log('Login!')
+            this.submitStatus = 'OK'
+            this.$router.push('/')
+          })
+          .catch(err => {
+            this.submitStatus = err.message
+          })
       }
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
     }
   }
 }

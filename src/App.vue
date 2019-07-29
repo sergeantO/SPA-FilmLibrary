@@ -33,10 +33,22 @@
 export default {
   data () {
     return {
-      menuShow: false,
-      linkMenu: [
-        {title: 'Home', url: '/'},
-        {title: 'Tasks', url: '/task'},
+      menuShow: false
+    }
+  },
+  computed: {
+    checkUser () {
+      return this.$store.getters.checkUser
+    },
+    linkMenu () {
+      if (this.checkUser) {
+        return [
+          {title: 'Home', url: '/'},
+          {title: 'Tasks', url: '/task'}
+        ]
+      }
+
+      return [
         {title: 'Login', url: '/login'},
         {title: 'Registration', url: '/registration'}
       ]
