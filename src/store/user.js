@@ -45,6 +45,10 @@ export default {
     loggedUser ({commit}, payload) {
       commit('setUser', new User(payload.uid))
       console.log(payload.uid)
+    },
+    logoutUser ({commit}) {
+      firebase.auth().signOut()
+      commit('setUser', null)
     }
   },
   getters: {

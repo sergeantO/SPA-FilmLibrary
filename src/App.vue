@@ -26,6 +26,11 @@
                     router-link.navbar-link(
                       :to="`${link.url}`"
                     ) {{link.title}}
+                  li.navbar-item(
+                    v-if="checkUser"
+                    @click="logout"
+                  )
+                    span.navbar-link Logout
     router-view
 </template>
 
@@ -34,6 +39,12 @@ export default {
   data () {
     return {
       menuShow: false
+    }
+  },
+  methods: {
+    logout () {
+      this.$router.push('/login')
+      this.$store.dispatch('logoutUser')
     }
   },
   computed: {

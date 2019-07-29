@@ -45,7 +45,6 @@
 
           // TOTAL TIME
           .total-time
-
             // Film Time
             .total-time__film(
               v-if="whatWatch === 'Film'"
@@ -83,52 +82,52 @@
               )
               p {{ serialTime }}
 
-        // TAG LIST
-        // Add New Tag
-        .tag-list.tag-list--add
-          .ui-tag__wrapper(
-            @click="tagMenuShow = !tagMenuShow"
-          )
-            .ui-tag
-              span.tag-title Add New
-              span.button-close(
-                :class="{ active: !tagMenuShow }"
-              )
-
-        // Show Input
-        .tag-list.tag-list--menu(
-          v-if="tagMenuShow"
-        )
-          input.tag-add--input(
-            type="text"
-            placeholder="New tag"
-            v-model="tagTitle"
-            @keyup.enter="newTag"
-          )
-
-        //All Tags
-        .tag-list
-          transition-group(
-            enter-active-class="animated fadeInRight"
-            leave-active-class="animated fadeOutDown"
-          )
+          // TAG LIST
+          // Add New Tag
+          .tag-list.tag-list--add
             .ui-tag__wrapper(
-              v-for="tag in tags"
-              :key="tag.title"
+              @click="tagMenuShow = !tagMenuShow"
             )
-              .ui-tag(
-                @click="addTagUsed(tag)"
-                :class="{used: tag.use}"
-              )
-                span.tag-title {{ tag.title }}
-                span.button-close
+              .ui-tag
+                span.tag-title Add New
+                span.button-close(
+                  :class="{ active: !tagMenuShow }"
+                )
 
-        // SUBMIT
-        .row.grid-end
-          button.button.button-primary.button--round(
-              type="submit"
-              :disabled="submitStatus === 'PENDING'"
-          ) Add {{ whatWatch }}
+          // Show Input
+          .tag-list.tag-list--menu(
+            v-if="tagMenuShow"
+          )
+            input.tag-add--input(
+              type="text"
+              placeholder="New tag"
+              v-model="tagTitle"
+              @keyup.enter="newTag"
+            )
+
+          //All Tags
+          .tag-list
+            transition-group(
+              enter-active-class="animated fadeInRight"
+              leave-active-class="animated fadeOutDown"
+            )
+              .ui-tag__wrapper(
+                v-for="tag in tags"
+                :key="tag.title"
+              )
+                .ui-tag(
+                  @click="addTagUsed(tag)"
+                  :class="{used: tag.use}"
+                )
+                  span.tag-title {{ tag.title }}
+                  span.button-close
+
+          // SUBMIT
+          .row.grid-end
+            button.button.button-primary.button--round(
+                type="submit"
+                :disabled="submitStatus === 'PENDING'"
+            ) Add {{ whatWatch }}
 </template>
 
 <script>
@@ -196,6 +195,7 @@ export default {
         } else {
           time = this.serialTime
         }
+
         // Task
         const task = {
           title: this.taskTitle,
